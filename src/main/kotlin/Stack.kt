@@ -78,7 +78,11 @@ interface Stack<T: Comparable<T>> {
      *
      * @T - тип элементов стека
      */
+<<<<<<< HEAD
     class LinkedListStack<T : Comparable<T>> : Stack<T> {
+=======
+    class LinkedListStack<T> : Stack<T> {
+>>>>>>> origin/stack
         private val data = java.util.LinkedList<T>()
 
         override fun push(item: T) {
