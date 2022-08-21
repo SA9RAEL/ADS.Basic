@@ -10,7 +10,7 @@ import kotlin.collections.ArrayList
  * Все операции выполняются за время O(1)
  */
 
-interface Stack<T: Comparable<T>> {
+interface Stack<T : Comparable<T>> {
     /**
      * добавляет элемент в вершин стека
      *
@@ -38,77 +38,4 @@ interface Stack<T: Comparable<T>> {
      */
     fun clear()
 
-    /**
-     * реализация с помощью динамического массива
-     *
-     * @T - тип элементов стека
-     */
-    class ArrayListStack<T : Comparable<T>> : Stack<T> {
-        private val data = ArrayList<T>()
-
-        override fun push(item: T) {
-            data.add(item)
-        }
-
-        override fun pop(): T {
-            if (isEmpty()) {
-                throw IllegalArgumentException("Stack is empty!")
-            }
-            return data.removeLast()
-        }
-
-        override fun peek(): T {
-            if (isEmpty()) {
-                throw IllegalArgumentException("Stack is empty!")
-            }
-            return data.last()
-        }
-
-        override fun isEmpty(): Boolean {
-            return data.size == 0
-        }
-
-        override fun clear() {
-            data.clear()
-        }
-    }
-
-    /**
-     * реализация через связный список
-     *
-     * @T - тип элементов стека
-     */
-<<<<<<< HEAD
-    class LinkedListStack<T : Comparable<T>> : Stack<T> {
-=======
-    class LinkedListStack<T> : Stack<T> {
->>>>>>> origin/stack
-        private val data = java.util.LinkedList<T>()
-
-        override fun push(item: T) {
-            data.add(item)
-        }
-
-        override fun pop(): T {
-            if (isEmpty()) {
-                throw IllegalArgumentException("Stack is empty!")
-            }
-            return data.removeLast()
-        }
-
-        override fun peek(): T {
-            if (isEmpty()) {
-                throw IllegalArgumentException("Stack is empty!")
-            }
-            return data.peekLast()
-        }
-
-        override fun isEmpty() = data.isEmpty()
-
-
-        override fun clear() {
-            data.clear()
-        }
-
-    }
 }
