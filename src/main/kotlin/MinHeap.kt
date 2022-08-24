@@ -13,7 +13,7 @@ package ADS.Basic.src.main.kotlin
  */
 
 class MinHeap<T : Comparable<T>>() {
-    private val items = mutableListOf<T?>()
+    private val items = mutableListOf<T>()
     var size: Int = 0
 
     /**
@@ -31,12 +31,13 @@ class MinHeap<T : Comparable<T>>() {
     private fun peek() = get(0)
 
     /**
+     * Достаёт и удаляет минимальное значение.
      * Если куча пустая - вернёт null.
      * В противном случае вернёт (и "запомнит") корневой (минимальный) элемент,
      * поменяет его с последним элементом в куче, потом просеет этот элемент вниз,
      * чтобы всстановить свойство кучи.
      */
-    fun getMin(): T? {
+    fun remove(): T? {
         return if (size == 0) {
             null
         } else {
@@ -57,13 +58,11 @@ class MinHeap<T : Comparable<T>>() {
      * Если у узла нет родителя (т.е. он корень), мы всё равно можем его типа сифтапнуть.
      */
     private fun siftUp(i: Int) {
-        assert(i in 0 until size)
         if (i == 0) {
             return
         }
-
         val parent = parentIndex(i)
-        if (get(i)!! > get(parent)!!) {
+        if (get(i) > get(parent)) {
             swap(i, parent)
             siftUp(parent)
         }
@@ -72,46 +71,46 @@ class MinHeap<T : Comparable<T>>() {
     /**
      * Функция "просеивания вниз":
      * Найти большее дочернее значение.
-     * Гарантировать, что левый дочерний элемент существует, потому что это не конечный узел,
+     * Гарантировать, что левый дочерний элемент существует,
+     * потому что это не конечный узел,
      * и поскольку мы добавляем элементы в кучу, добавляя их в конец,
-     * левый режим должен быть заполнен перед правым узлом.
+     * левый узел должен быть заполнен перед правым узлом.
      *
      */
     private fun siftDown(i: Int) {
-        assert(i in 0 until size)
         if (i >= size / 2) {
             return
         }
-        while (leftChildIndex(i) < size) {
+        while (leftChildIndex(i) <= size) {
             val left = leftChildIndex(i)
             val right = rightChildIndex(i)
-            var largerChild = left
-            if (right < size && get(right)!! < get(left)!!) {
-                largerChild = right
+            var smallerChild = left
+            if (right < size && get(right) < get(left)) {
+                smallerChild = right
             }
-            if (i <= largerChild) {
+            if (i <= smallerChild) {
                 break
             }
-            swap(i, largerChild)
+            swap(i, smallerChild)
 
         }
 
 
     }
 
-    private fun set(i: Int, value: T?) {
-        if (i < items.size) {
+    private fun set(i: Int, value: T) {
+        if (i < items.size - 1) {
             items[i] = value
         } else {
             items.add(value)
         }
     }
 
-    private fun get(i: Int): T? {
-        return if (i < items.size) {
+    private fun get(i: Int): T {
+        return if (i <= items.size - 1 ) {
             items[i]
         } else {
-            null
+            throw Exception("Element has not found")
         }
     }
 
